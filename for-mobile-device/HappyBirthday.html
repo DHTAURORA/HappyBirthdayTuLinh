@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" /> <!-- Set character encoding for Unicode support -->
+    <meta name="viewport" content="user-scalable=no"> <!-- Prevent user from zooming (double-tap/pinch) -->
+    <link rel="stylesheet" href="HappyBirthday.css" /> <!-- Link to main CSS file for layout and styles -->
+    <title>Happy birthday</title> <!-- Page title shown in browser tab -->
+    <!-- 
+      Note: 
+      - The CSS file contains all layout, card, letter, and animation styles.
+      - The canvas is used for background animation and fireworks.
+    -->
+  </head>
+  <body>
+    <!-- 
+      Animated Strings Container
+      - This div is for the animated "HAPPY BIRTHDAY" strings.
+      - The canvas covers the background for fireworks and stars.
+    -->
+    <div class="animated-strings-container">
+      <!-- The canvas for animated strings is positioned absolutely and covers the background. -->
+    </div>
+
+    <!-- 
+      Main Panel
+      - Contains the birthday card and the bonus letter.
+      - Both are styled as 3D flip cards.
+    -->
+    <div class="main-panel">
+      <!-- 
+        Birthday Card
+        - Flips to show the message.
+        - .card-inner handles the 3D flip.
+        - .card-front is the cover, .card-back is the message.
+      -->
+      <div class="birthday-card">
+        <div class="card-inner">
+          <div class="card-front">
+            <div class="card-title">
+              <span class="cake-icon">🎂</span> Birthday Card <span class="cake-icon">🎂</span>
+              <!-- Cake icon and title on card front -->
+            </div>
+          </div>
+          <div class="card-middle"></div> <!-- Decorative image layer between front and back -->
+          <div class="card-back">
+            <div class="card-message" contenteditable="true" spellcheck="true" style="outline: none;">
+              <div class="wish">
+                <!-- Main wish message inside the card -->
+                I’m really grateful we’ve reconnected and that I get to know the amazing person you’ve become.
+                <br />
+                Wishing you a year ahead filled with calm days, warm people, and the kind of moments that feel like home.
+                <br />
+                May you find happiness not just in what you do, but in the moments that bring you joy and rest.
+                <br />
+                Hope today reminds you of how much you're loved, and how much you deserve happiness - just for being you.
+                <span class="heart">❤️</span> <!-- Heart icon at the end -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 
+        Bonus Letter Card
+        - Flips to show the editable letter message.
+        - .letter-inner handles the 3D flip.
+        - .letter-front is the cover, .letter-back is the editable message.
+      -->
+      <div class="letter">
+        <div class="letter-inner">
+          <div class="letter-front">
+            <div class="letter-title">Bonus letter</div> <!-- Title on letter front -->
+            <div class="letter-message">
+              <!-- Optionally, you can add a preview or intro here -->
+            </div>
+          </div>
+          <div class="letter-middle"></div> <!-- Decorative image layer between front and back -->
+          <div class="letter-back">
+            <button class="letter-expand-btn" title="Expand letter">&#x26F6;</button> <!-- Expand button in top-right -->
+            <div class="greeting" style="margin-top:1em;">Dear Tú Linh,</div>
+            <div class="letter-message" contenteditable="true" spellcheck="true" style="outline: none;">
+              <!-- Editable letter message content -->
+              I wanted to write you something real today. Something that tells you just how much I appreciate having you in my life. 
+              It’s kind of wild how things work out - we weren't that close before, but reconnecting with you after all these years has meant more to me than I ever expected. 
+              I know life’s not always easy. Work feels heavy, not because of the hours, but because of the unspoken things - the things you’ve told me and the things I can quietly sense even when you don’t say them out loud. 
+              You don’t always get the support or peace you deserve, but you still get up and carry yourself with strength and kindness every day. 
+              That says a lot about you. And I see it. You might not realize it, but there’s something incredibly strong about choosing to be gentle in a world that often isn’t. 
+              About staying kind, even when you’re tired. 
+              I admire that. I admire you - not because you’re trying to impress anyone, but because you stay true to yourself even when things aren’t perfect. 
+              I hope this year brings you closer to the life you really want - not the one you feel stuck with. 
+              I hope you find the courage to chase what feels right and the freedom to let go of what doesn’t. 
+              You’ve got people around you who love you, and even though I’m just one of them - I hope you know I’m rooting for you, too. Always. 
+              No matter where life takes me, this friendship, this connection - it stays with me. Quietly, maybe. But deeply.
+              <br />
+              Happy birthday again.
+              <br />
+              You deserve better days ahead - and I believe they’re coming.
+              <br />
+              <span style="color:#ee2550;">With all my respect and warmest friendship,</span>
+              <br />
+              <span style="color:#ee2550;">Thành, Uncle T</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- 
+      Canvas for Fireworks and Stars Animation
+      - This canvas is used by the JS for all background effects.
+    -->
+    <canvas id="c"></canvas> <!-- Main canvas for fireworks and animated strings -->
+    <script src="HappyBirthday.js"></script> <!-- Main JS for animation and logic -->
+    <!-- 
+      Note:
+      - The JS file handles all animation, overlay, and card/letter logic.
+      - The overlay click-to-start is managed in JS.
+      - The letter message is editable directly in the browser.
+    -->
+  </body>
+</html>

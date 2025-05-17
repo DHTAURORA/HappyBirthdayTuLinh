@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Birthday Card</title>
+  <script>
+    // Simple device detection
+    function isMobile() {
+      return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    }
+    document.addEventListener('DOMContentLoaded', function() {
+      if (isMobile()) {
+        window.location.href = "./for-mobile-device/HappyBirthday.html";
+      } else {
+        window.location.href = "./for-pc-device/HappyBirthday.html";
+      }
+    });
+  </script>
+  <noscript>
+    Please enable JavaScript to view this site.
+  </noscript>
+</head>
+<body>
+  Redirecting...
+</body>
+</html>

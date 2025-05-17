@@ -1,0 +1,417 @@
+/* ===============================
+   Fullscreen Layout and Canvas
+   =============================== */
+html, body {
+  margin: 0;                  /* Remove default margin */
+  padding: 0;                 /* Remove default padding */
+  width: 100vw;               /* Full viewport width */
+  height: 100vh;              /* Full viewport height */
+  overflow: hidden;           /* Prevent scrollbars */
+  font-size: 20px;            /* Larger base font size */
+}
+
+canvas {
+  display: block;             /* Remove inline gap */
+  position: fixed;            /* Overlay on page */
+  width: 100vw !important;    /* Full width */
+  height: 100vh !important;   /* Full height */
+  max-width: 100vw !important;/* Prevent overflow */
+  max-height: 100vh !important;/* Prevent overflow */
+  background: transparent;    /* Transparent background */
+  z-index: 0;                 /* Behind other elements */
+}
+
+/* ===============================
+   Main Panel for Card and Letter
+   =============================== */
+.main-panel {
+  position: fixed;            /* Fixed position to cover viewport */
+  top: 0;                     /* Align to top */
+  left: 0;                    /* Align to left */
+  width: 100vw !important;    /* Full viewport width */
+  height: 100vh !important;   /* Full viewport height */
+  min-height: 0;              /* Minimum height */
+  display: flex;              /* Flex layout */
+  flex-direction: column;     /* Stack vertically */
+  align-items: center;        /* Center horizontally */
+  justify-content: flex-start;/* Align items to top */
+  z-index: 3;                 /* Above background/canvas */
+  pointer-events: auto;       /* Enable interaction */
+  padding-top: 0;             /* Remove extra top padding */
+  padding-bottom: 0;          /* Remove extra bottom padding */
+  box-sizing: border-box;     /* Include padding in size */
+  background: transparent;    /* Ensure background doesn't block events */
+}
+
+/* ===============================
+   Card and Letter Sizing & Layout
+   =============================== */
+.birthday-card {
+  width: 100%;                /* Full width of panel */
+  max-width: 800px;           /* Max width */
+  min-width: 260px;           /* Min width */
+  height: 90vh;              /* Height relative to viewport */
+  min-height: 240px;          /* Min height */
+  max-height: 560px;          /* Max height */
+  margin: 45vh 0 0 0;         /* Move card down using top margin */
+  padding-top: 5px;           /* Visually expand to the top */
+  padding-left: 5px;          /* Visually expand to the left */
+  perspective: 1200px;        /* 3D perspective for flip */
+  z-index: 4;                 /* Above panel */
+  box-sizing: border-box;     /* Include padding/border */
+  pointer-events: auto;       /* Enable interaction */
+  background: none;           /* No background */
+  display: block;             /* Block element */
+  opacity: 1;                 /* Fully visible */
+}
+
+.letter {
+  width: 100%;                /* Full width of panel */
+  max-width: 800px;           /* Max width */
+  min-width: 260px;           /* Min width */
+  height: 90vh;              /* Height relative to viewport */
+  min-height: 240px;          /* Min height */
+  max-height: 560px;          /* Max height */
+  margin: 50px 0 0 0;     /* Move letter down and adjust with negative bottom margin */
+  padding-bottom: 5px;        /* Visually expand to the bottom */
+  padding-left: 5px;          /* Visually expand to the left */
+  perspective: 1200px;        /* 3D perspective for flip */
+  z-index: 4;                 /* Above panel */
+  box-sizing: border-box;     /* Include padding/border */
+  pointer-events: auto;       /* Enable interaction */
+  background: none;           /* No background */
+  display: block;             /* Block element */
+  opacity: 1;                 /* Fully visible */
+}
+
+/* ===============================
+   Card Inner for Flipping
+   =============================== */
+.card-inner,
+.letter-inner {
+  width: 100%;                /* Full width */
+  height: 100%;               /* Full height */
+  transition: transform 2s cubic-bezier(.4,2,.6,1); /* Smooth flip */
+  transform-style: preserve-3d; /* 3D transform */
+  cursor: pointer;            /* Pointer cursor */
+}
+
+/* ===============================
+   Card and Letter Sides
+   =============================== */
+.card-front, .card-back,
+.letter-front, .letter-back {
+  position: absolute;         /* Overlay sides */
+  width: 100%;                /* Full width */
+  height: 100%;               /* Full height */
+  border-radius: 18px;        /* Rounded corners */
+  box-shadow: 0 8px 32px 0 rgba(2,20,53,0.25); /* Soft shadow */
+  display: flex;              /* Flex layout */
+  flex-direction: column;     /* Stack vertically */
+  justify-content: center;    /* Center vertically */
+  align-items: center;        /* Center horizontally */
+  backface-visibility: hidden;/* Hide back when flipped */
+  background: rgba(255,255,255,0.92); /* Semi-transparent white */
+  color: #222;                /* Text color */
+  border: 2px solid #e0e6f6;  /* Light border */
+  z-index: 2;                 /* Above inner */
+  overflow: visible;          /* Allow overflow */
+  cursor: pointer;            /* Pointer cursor */
+}
+
+/* ===============================
+   Front Side Styles
+   =============================== */
+.card-front {
+  font-size: 1.65rem;         /* Font size */
+  letter-spacing: 1px;        /* Spacing between letters */
+  background: rgba(255, 255, 255, 0.00); /* Transparent background */
+  backdrop-filter: blur(0px) saturate(120%); /* Subtle blur */
+  -webkit-backdrop-filter: blur(0px) saturate(140%); /* Safari blur */
+  border: 1.5px solid rgba(255,255,255,0.00); /* Transparent border */
+  text-align: center;         /* Center the text */
+}
+
+.letter-front {
+  font-size: 1.65rem;         /* Font size */
+  letter-spacing: 1px;        /* Spacing between letters */
+  background: rgba(255, 255, 255, 0.00); /* Transparent background */
+  backdrop-filter: blur(0px) saturate(100%); /* Subtle blur */
+  -webkit-backdrop-filter: blur(0px) saturate(120%); /* Safari blur */
+  border: 1.5px solid rgba(255,255,255,0.00); /* Transparent border */
+  text-align: center;         /* Center the text */
+}
+
+/* ===============================
+   Card and Letter Titles
+   =============================== */
+.card-title, .letter-title {
+  font-size: 2rem;            /* Large title */
+  font-weight: bold;          /* Bold text */
+  color: #eeff00;             /* Yellow color */
+  background: rgba(187, 188, 189, 0.700); /* Semi-transparent gray */
+  border-radius: 0 0 16px 16px; /* Rounded bottom corners */
+  padding: 18px 48px 24px 48px; /* Padding */
+  display: block;             /* Block element */
+  text-align: center;         /* Center text */
+  box-sizing: border-box;     /* Include padding */
+  width: 99.5%;               /* Almost full width */
+  position: absolute;         /* Overlay */
+  top: -1px;                  /* Slightly above */
+  left: 0.25%;                /* Slightly right */
+  z-index: 2;                 /* Above front */
+  margin: 0;                  /* Remove margin */
+  clip-path: polygon(1.5% 0, 98.5% 0, 92% 100%, 8% 100%); /* Slanted bottom */
+  -webkit-clip-path: polygon(1.5% 0, 98.5% 0, 92% 100%, 8% 100%); /* Safari slant */
+}
+
+/* ===============================
+   Back Side Styles
+   =============================== */
+.card-back, .letter-back {
+  transform: rotateY(180deg); /* Flip for back */
+  background: rgba(187, 188, 189, 0.72); /* Semi-transparent gray */
+}
+
+/* ===============================
+   Middle Image Layer
+   =============================== */
+.card-middle, .letter-middle {
+  position: absolute;         /* Overlay */
+  top: 0;                     /* Align to top */
+  left: 0;                    /* Align to left */
+  width: 100%;                /* Full width */
+  height: 100%;               /* Full height */
+  background-size: cover;     /* Cover area */
+  background-position: center 65%; /* Centered image */
+  filter: brightness(1.1);    /* Slightly brighter */
+  z-index: 1;                 /* Below front/back */
+  pointer-events: none;       /* No interaction */
+  opacity: 0.7;               /* Slightly transparent */
+  border-radius: 18px;        /* Rounded corners */
+  display: flex;              /* Flex layout */
+}
+.card-middle { background-image: url('src/Linh.jpg'); }     /* Card image */
+.letter-middle { background-image: url('src/Linh2.jpg'); }  /* Letter image */
+
+/* ===============================
+   Card and Letter Message Area
+   =============================== */
+.card-message, .letter-message {
+  width: 90%;                 /* Almost full width */
+  height: 90%;                /* Almost full height */
+  text-align: justify;        /* Justify text */
+  overflow: auto;             /* Scroll if needed */
+  max-height: 90%;            /* Prevent overflow */
+  word-break: break-word;     /* Break long words */
+  padding: 0 0.5vw;           /* Minimal horizontal padding */
+  box-sizing: border-box;     /* Include padding */
+  font-size: 2rem;            /* Message font size */
+  margin-top: 0;              /* Remove top margin */
+  margin-bottom: 0;           /* Remove bottom margin */
+  background: transparent;    /* No background */
+  color: #222;                /* Text color */
+  line-height: 1.5;           /* Line height */
+  scrollbar-width: thin;      /* Thin scrollbar (Firefox) */
+  scrollbar-color: #d1d1d1 transparent; /* Scrollbar color (Firefox) */
+  cursor: pointer;            /* Pointer cursor */
+}
+
+/* ===============================
+   Remove Extra Scrollbar/Padding from .wish
+   =============================== */
+.wish {
+  padding: 0 0.2vw;           /* Reduce horizontal padding */
+  overflow: visible !important; /* Prevent scrollbars */
+  box-sizing: border-box;     /* Include padding */
+}
+
+/* ===============================
+   Webkit Scrollbar Styling
+   =============================== */
+.card-message::-webkit-scrollbar,
+.letter-message::-webkit-scrollbar {
+  width: 0px;           /* Hide scrollbar (Webkit browsers) */
+  background: transparent;
+}
+
+.card-message,
+.letter-message {
+  scrollbar-width: none; /* Hide scrollbar (Firefox) */
+  -ms-overflow-style: none; /* Hide scrollbar (IE/Edge) */
+}
+
+.card-message::-webkit-scrollbar,
+.letter-message::-webkit-scrollbar {
+  display: none;         /* Hide scrollbar (Webkit browsers, fallback) */
+}
+
+/* ===============================
+   Editable Letter Message
+   =============================== */
+.letter-message[contenteditable="true"] {
+  outline: 2px dashed #f76c6c; /* Dashed outline */
+  cursor: pointer;             /* Text cursor */
+}
+.letter-message[contenteditable="true"]:focus {
+  outline: 2.5px solid #ee2550; /* Solid outline on focus */
+}
+
+/* ===============================
+   Greeting and Wish Styles
+   =============================== */
+.greeting {
+  font-size: 1.75rem;         /* Large font */
+  font-weight: bold;          /* Bold */
+  font-style: italic;         /* Italic */
+  margin-bottom: 0.5em;       /* Space below */
+  color: #ee2550;             /* Pink color */
+}
+
+/* ===============================
+   Flip Effect for Card and Letter
+   =============================== */
+.birthday-card.flipped .card-inner,
+.letter.flipped .letter-inner {
+  transform: rotateY(180deg); /* Flip card/letter */
+}
+
+/* ===============================
+   Pulse Animation for Heart
+   =============================== */
+@keyframes pulse {
+  0% { transform: scale(1);}      /* Start normal */
+  100% { transform: scale(1);}    /* Back to normal */
+}
+
+/* ===============================
+   Import Denhils Font
+   =============================== */
+@font-face {
+  font-family: 'Denhils';
+  src: url('src/Denhils-j99Yj.ttf') format('truetype');
+  font-display: swap;
+}
+
+/* ===============================
+   Apply Denhils Font
+   =============================== */
+.card-message, .letter-message, .wish, /* Main text areas */
+.card-title, .letter-title,             /* Titles */
+.greeting,                             /* Greeting */
+.card-front, .letter-front,            /* Card/letter front */
+.card-back, .letter-back {             /* Card/letter back */
+  font-family: 'Denhils', monospace, sans-serif !important;
+}
+
+/* ===============================
+   Prevent Text Selection, Copy, Cut, Drag, and Inking on Card and Letter
+   =============================== */
+.birthday-card,                  /* Card container */
+.letter,                         /* Letter container */
+.card-message,                   /* Card message area */
+.letter-message {                /* Letter message area */
+  user-select: none;             /* Prevent text selection */
+  -webkit-user-select: none;     /* Prevent text selection on Safari/Chrome */
+  -ms-user-select: none;         /* Prevent text selection on IE/Edge */
+  -moz-user-select: none;        /* Prevent text selection on Firefox */
+  -webkit-touch-callout: none;   /* Prevent callout on iOS */
+  -webkit-user-drag: none;       /* Prevent drag on WebKit browsers */
+  pointer-events: auto;          /* Allow pointer events for flipping */
+}
+
+/* ===============================
+   Expanded Letter Animation (Open)
+   =============================== */
+.letter.expanded {                       /* When letter is expanded */
+  position: fixed !important;            /* Overlay above all */
+  width: 100%;                           /* Full width */
+  max-width: 800px !important;           /* Max width */
+  min-width: 260px !important;           /* Min width */
+  height: 200% !important;               /* Double height for effect */
+  min-height: 480px !important;          /* Min height */
+  max-height: 840px !important;          /* Max height */
+  margin: 30vh !important;               /* Vertical margin for centering */
+  padding: 0 !important;                 /* Remove padding */
+  z-index: 999;                          /* On top of other elements */
+  background: rgba(255,255,255,0.98);    /* Almost opaque white background */
+  border-radius: 18px !important;        /* Rounded corners */
+  box-shadow: 0 8px 32px 0 rgba(2,20,53,0.25); /* Soft shadow */
+  display: flex;                         /* Flex layout */
+  flex-direction: column;                /* Stack children vertically */
+  align-items: center;                   /* Center horizontally */
+  justify-content: flex-start;           /* Align to top */
+  /* Smoother expand animation */
+  animation: letterExpandDown 1s cubic-bezier(.22,1,.36,1) both; /* Animation for expanding */
+}
+
+/* ===============================
+   Animation for expanding the letter (open)
+   =============================== */
+@keyframes letterExpandDown {
+  from {
+    transform: translateY(-60px) scale(0.96); /* Start above and slightly smaller */
+    opacity: 0.2;                             /* Almost transparent */
+    filter: blur(2px);                        /* Blurry */
+  }
+  40% {
+    transform: translateY(12px) scale(1.03);  /* Overshoot slightly */
+    opacity: 1;                               /* Fully visible */
+    filter: blur(0.5px);                      /* Less blur */
+  }
+  70% {
+    transform: translateY(-4px) scale(0.995); /* Bounce back */
+    opacity: 1;                               /* Fully visible */
+    filter: blur(0.2px);                      /* Almost sharp */
+  }
+  to {
+    transform: translateY(0) scale(1);        /* Settle in place */
+    opacity: 1;                               /* Fully visible */
+    filter: blur(0);                          /* Sharp */
+  }
+}
+
+/* ===============================
+   Expanded Letter Animation (Close)
+   =============================== */
+.letter.expanded.closing {                    /* When closing animation is triggered */
+  animation: letterExpandUp 1s cubic-bezier(.22,1,.36,1) both; /* Animation for collapsing */
+}
+
+/* ===============================
+   Animation for collapsing the letter (close)
+   =============================== */
+@keyframes letterExpandUp {
+  from {
+    transform: translateY(0) scale(1);        /* Start at normal position */
+    opacity: 1;                               /* Fully visible */
+    filter: blur(0);                          /* Sharp */
+  }
+  40% {
+    transform: translateY(-8px) scale(1.03);  /* Move up and scale up */
+    opacity: 1;                               /* Fully visible */
+    filter: blur(0.2px);                      /* Slight blur */
+  }
+  70% {
+    transform: translateY(12px) scale(0.97);  /* Move down and scale down */
+    opacity: 1;                               /* Fully visible */
+    filter: blur(0.5px);                      /* More blur */
+  }
+  to {
+    transform: translateY(-60px) scale(0.96); /* Move far up and shrink */
+    opacity: 0.2;                             /* Almost transparent */
+    filter: blur(2px);                        /* Very blurry */
+  }
+}
+
+/* ===============================
+   Expand Button Positioning on Letter Back
+   =============================== */
+.letter-back .letter-expand-btn { /* Expand button inside letter back */
+  position: absolute;             /* Absolutely positioned */
+  top: 18px;                      /* 18px from the top */
+  right: 18px;                    /* 18px from the right */
+  z-index: 10;                    /* Above other elements in letter back */
+}
+
+
