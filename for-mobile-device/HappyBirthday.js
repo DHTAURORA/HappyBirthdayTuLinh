@@ -733,10 +733,8 @@ disableInkingSelectors.forEach(selector => {
   document.querySelectorAll(selector).forEach(el => {
     el.addEventListener('copy', e => e.preventDefault());        // Prevent copy
     el.addEventListener('cut', e => e.preventDefault());         // Prevent cut
-    el.addEventListener('paste', e => e.preventDefault());       // Prevent paste
-    el.addEventListener('dragstart', e => e.preventDefault());   // Prevent drag
-    el.addEventListener('selectstart', e => e.preventDefault()); // Prevent select
     el.addEventListener('contextmenu', e => e.preventDefault()); // Prevent context menu
+    el.addEventListener('selectstart', e => e.preventDefault()); // Prevent select
   });
 });
 
@@ -820,3 +818,13 @@ if (expandBtn && letterElement) {
     }
   });
 }
+
+// Prevent copy, cut, and context menu on card and letter messages
+['.birthday-card', '.letter', '.card-message', '.letter-message'].forEach(selector => {
+  document.querySelectorAll(selector).forEach(el => {
+    el.addEventListener('copy', e => e.preventDefault());        // Block copy
+    el.addEventListener('cut', e => e.preventDefault());         // Block cut
+    el.addEventListener('contextmenu', e => e.preventDefault()); // Block context menu (long-press on mobile)
+    el.addEventListener('selectstart', e => e.preventDefault()); // Block selection
+  });
+});
